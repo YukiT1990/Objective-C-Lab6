@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSMutableArray *fiveDiceContainer;
 @property NSMutableDictionary *heldDice;
 
-- (void) holdDie: (int) targetDieNumber;
+- (void) holdDie: (NSString *) targetDieNumberStr;
 
 @end
 
