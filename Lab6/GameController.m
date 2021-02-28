@@ -40,4 +40,10 @@
     }
 }
 
+- (void) resetDice {
+    for (Dice *eachDie in self.fiveDiceContainer) {
+        eachDie.isHeld = false;
+    }
+}
+
 @end

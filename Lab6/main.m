@@ -72,8 +72,14 @@ int main(int argc, const char * argv[]) {
                         NSLog(@"Invalid input. Please try again.");
                     }
                 }
-                
-                
+            } else if ([choiceInput isEqualToString:@"reset"]) {
+                [newGameController resetDice];
+                die1 = newGameController.fiveDiceContainer[0];
+                die2 = newGameController.fiveDiceContainer[1];
+                die3 = newGameController.fiveDiceContainer[2];
+                die4 = newGameController.fiveDiceContainer[3];
+                die5 = newGameController.fiveDiceContainer[4];
+                NSLog(@"%@ %@ %@ %@ %@", die1.returnDieFace, die2.returnDieFace, die3.returnDieFace, die4.returnDieFace, die5.returnDieFace);
             } else {
                 NSLog(@"Invalid input. Please try again.");
             }

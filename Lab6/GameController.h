@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSMutableDictionary *heldDice;
 
 - (void) holdDie: (NSString *) targetDieNumberStr;
+- (void) resetDice;
 
 @end
 
