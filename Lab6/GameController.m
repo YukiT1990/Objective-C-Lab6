@@ -46,4 +46,34 @@
     }
 }
 
+- (NSString *) returnCurrentDice {
+    Dice *die1 = self.fiveDiceContainer[0];
+    Dice *die2 = self.fiveDiceContainer[1];
+    Dice *die3 = self.fiveDiceContainer[2];
+    Dice *die4 = self.fiveDiceContainer[3];
+    Dice *die5 = self.fiveDiceContainer[4];
+    NSString *currentDice = [NSString stringWithFormat:@"%@ %@ %@ %@ %@", die1.returnDieFace, die2.returnDieFace, die3.returnDieFace, die4.returnDieFace, die5.returnDieFace];
+    return currentDice;
+}
+
+- (int) returnCurrentScore {
+    int score = 0;
+    for (Dice *eachDie in self.fiveDiceContainer) {
+        if (eachDie.currentValue != 3) {
+            score += eachDie.currentValue;
+        }
+    }
+    return score;
+}
+
+- (void) printCurrentGameState {
+    NSLog(@"--------------------");
+    NSLog(@"--  Current Dice  --");
+    NSLog(@"%@", self.returnCurrentDice);
+    NSLog(@"");
+    NSLog(@"--   Total Score  --");
+    NSLog(@"Score: %d", self.returnCurrentScore);
+    NSLog(@"--------------------");
+}
+
 @end

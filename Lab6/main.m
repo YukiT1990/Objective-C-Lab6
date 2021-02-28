@@ -22,7 +22,7 @@ int main(int argc, const char * argv[]) {
         GameController *newGameController = [[GameController alloc] init];
         newGameController.fiveDiceContainer = [NSMutableArray arrayWithObjects:die1, die2, die3, die4, die5, nil];
         
-        NSLog(@"%@ %@ %@ %@ %@", die1.returnDieFace, die2.returnDieFace, die3.returnDieFace, die4.returnDieFace, die5.returnDieFace);
+        [newGameController printCurrentGameState];
         
         BOOL playingGame = YES;
         while (playingGame) {
@@ -39,17 +39,11 @@ int main(int argc, const char * argv[]) {
                     eachDie.currentValue = die1.randomizeValue;
                     i++;
                 }
-                die1 = newGameController.fiveDiceContainer[0];
-                die2 = newGameController.fiveDiceContainer[1];
-                die3 = newGameController.fiveDiceContainer[2];
-                die4 = newGameController.fiveDiceContainer[3];
-                die5 = newGameController.fiveDiceContainer[4];
-                NSLog(@"%@ %@ %@ %@ %@", die1.returnDieFace, die2.returnDieFace, die3.returnDieFace, die4.returnDieFace, die5.returnDieFace);
+                [newGameController printCurrentGameState];
             } else if ([choiceInput isEqualToString:@"hold"]) {
                 BOOL underChoosingDieToHold = YES;
                 while (underChoosingDieToHold) {
-                    NSString *numberToHold = [newInputHandler getUserInput:[NSString stringWithFormat:@"\nInput the number of a die to hold (reselect to unhold)\n'finish' to complete choosing\n 1   2   3   4   5 \n%@ %@ %@ %@ %@", die1.returnDieFace, die2.returnDieFace, die3.returnDieFace, die4.returnDieFace, die5.returnDieFace]];
-                    
+                    NSString *numberToHold = [newInputHandler getUserInput:[NSString stringWithFormat:@"\nInput the number of a die to hold (reselect to unhold)\n'finish' to complete choosing\n 1   2   3   4   5 \n%@", [newGameController returnCurrentDice]]];
                     
                     if ([numberToHold isEqualToString:@"finish"]) {
                         underChoosingDieToHold = NO;
@@ -74,12 +68,9 @@ int main(int argc, const char * argv[]) {
                 }
             } else if ([choiceInput isEqualToString:@"reset"]) {
                 [newGameController resetDice];
-                die1 = newGameController.fiveDiceContainer[0];
-                die2 = newGameController.fiveDiceContainer[1];
-                die3 = newGameController.fiveDiceContainer[2];
-                die4 = newGameController.fiveDiceContainer[3];
-                die5 = newGameController.fiveDiceContainer[4];
-                NSLog(@"%@ %@ %@ %@ %@", die1.returnDieFace, die2.returnDieFace, die3.returnDieFace, die4.returnDieFace, die5.returnDieFace);
+                [newGameController printCurrentGameState];
+            } else if ([choiceInput isEqualToString:@"display"]) {
+                [newGameController printCurrentGameState];
             } else {
                 NSLog(@"Invalid input. Please try again.");
             }

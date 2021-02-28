@@ -17,6 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) holdDie: (NSString *) targetDieNumberStr;
 - (void) resetDice;
+- (NSString *) returnCurrentDice;
+- (int) returnCurrentScore;
+- (void) printCurrentGameState;
 
 @end
 
