@@ -12,6 +12,7 @@
 - (instancetype) init {
     if (self = [super init]) {
         _currentValue = self.randomizeValue;
+        _isHeld = false;
     }
     return self;
 }
@@ -21,21 +22,40 @@
 }
 
 - (NSString *) returnDieFace {
-    switch (self.currentValue) {
-        case 1:
-            return @"⚀";
-        case 2:
-            return @"⚁";
-        case 3:
-            return @"⚂";
-        case 4:
-            return @"⚃";
-        case 5:
-            return @"⚄";
-        case 6:
-            return @"⚅";
-        default:
-            return nil;
+    if (self.isHeld == false) {
+        switch (self.currentValue) {
+            case 1:
+                return @" ⚀ ";
+            case 2:
+                return @" ⚁ ";
+            case 3:
+                return @" ⚂ ";
+            case 4:
+                return @" ⚃ ";
+            case 5:
+                return @" ⚄ ";
+            case 6:
+                return @" ⚅ ";
+            default:
+                return nil;
+        }
+    } else {
+        switch (self.currentValue) {
+            case 1:
+                return @"[⚀]";
+            case 2:
+                return @"[⚁]";
+            case 3:
+                return @"[⚂]";
+            case 4:
+                return @"[⚃]";
+            case 5:
+                return @"[⚄]";
+            case 6:
+                return @"[⚅]";
+            default:
+                return nil;
+        }
     }
 }
 
