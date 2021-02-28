@@ -15,12 +15,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSMutableArray *fiveDiceContainer;
 @property NSMutableDictionary *heldDice;
 @property int remainingRolls;
+@property int lowestScore;
 
 - (void) holdDie: (NSString *) targetDieNumberStr;
 - (void) resetDice;
 - (NSString *) returnCurrentDice;
 - (int) returnCurrentScore;
 - (void) printCurrentGameState;
+- (void) forceToWin;
 
 @end
 

@@ -23,25 +23,45 @@ int main(int argc, const char * argv[]) {
         newGameController.fiveDiceContainer = [NSMutableArray arrayWithObjects:die1, die2, die3, die4, die5, nil];
         
         [newGameController printCurrentGameState];
+        int previousHoldCount = (int)newGameController.heldDice.count;
         
         BOOL playingGame = YES;
         while (playingGame) {
-            NSString *choiceInput = [newInputHandler getUserInput:@"\n'roll' to roll the dice\n'hold' to hold a dice\n'reset' to un-hold all dice\n'done' to end the game\n'display' to show current stats\n"];
+            NSString *choiceInput = [newInputHandler getUserInput:@"\n'roll' to roll the dice\n'hold' to hold a dice\n'reset' to un-hold all dice\n'done' to end the game\n'display' to show current stats\n'new game' to reset the score to beat"];
             if ([choiceInput isEqualToString:@"done"]) {
                 playingGame = NO;
             } else if ([choiceInput isEqualToString:@"roll"]) {
                 if (newGameController.remainingRolls > 0) {
-                    int i = 1;
+                    if (previousHoldCount < newGameController.heldDice.count) {
 
-                    for (Dice *eachDie in newGameController.fiveDiceContainer) {
-                        if (eachDie.isHeld == true) {
-                            continue;
+                        for (Dice *eachDie in newGameController.fiveDiceContainer) {
+                            if (eachDie.isHeld == true) {
+                                continue;
+                            }
+                            eachDie.currentValue = die1.randomizeValue;
                         }
-                        eachDie.currentValue = die1.randomizeValue;
-                        i++;
+                        newGameController.remainingRolls -= 1;
+                        [newGameController printCurrentGameState];
+                        previousHoldCount = (int)newGameController.heldDice.count;
+                        if (newGameController.remainingRolls <= 0) {
+                            NSLog(@" GAME OVER");
+                            [newGameController printCurrentGameState];
+                            if (newGameController.returnCurrentScore < newGameController.lowestScore) {
+                                newGameController.lowestScore = newGameController.returnCurrentScore;
+                            }
+                            NSLog(@"");
+                            NSLog(@" Start New Game");
+                            [newGameController resetDice];
+                            for (Dice *eachDie in newGameController.fiveDiceContainer) {
+                                eachDie.currentValue = die1.randomizeValue;
+                            }
+                            newGameController.remainingRolls = 5;
+                            [newGameController printCurrentGameState];
+                        }
+                    } else {
+                        NSLog(@"Please hold at least one die.");
                     }
-                    newGameController.remainingRolls -= 1;
-                    [newGameController printCurrentGameState];
+                    
                 } else {
                     NSLog(@"You can't roll anymore.");
                 }
@@ -49,11 +69,13 @@ int main(int argc, const char * argv[]) {
             } else if ([choiceInput isEqualToString:@"hold"]) {
                 BOOL underChoosingDieToHold = YES;
                 int holdCount = (int)newGameController.heldDice.count;
+                previousHoldCount = holdCount;
                 while (underChoosingDieToHold) {
                     NSString *numberToHold = [newInputHandler getUserInput:[NSString stringWithFormat:@"\nInput the number of a die to hold (reselect to unhold)\n'finish' to complete choosing\n 1   2   3   4   5 \n%@", [newGameController returnCurrentDice]]];
                     
                     if ([numberToHold isEqualToString:@"finish"]) {
                         if ((int)newGameController.heldDice.count > holdCount) {
+                            [newGameController printCurrentGameState];
                             underChoosingDieToHold = NO;
                         } else {
                             NSLog(@"Please hold at least one more die.");
@@ -78,11 +100,49 @@ int main(int argc, const char * argv[]) {
                         NSLog(@"Invalid input. Please try again.");
                     }
                 }
+                if ((int)newGameController.heldDice.count == 5) {
+                    NSLog(@" GAME OVER");
+                    [newGameController printCurrentGameState];
+                    if (newGameController.returnCurrentScore < newGameController.lowestScore) {
+                        newGameController.lowestScore = newGameController.returnCurrentScore;
+                    }
+                    NSLog(@"");
+                    NSLog(@" Start New Game");
+                    [newGameController resetDice];
+                    for (Dice *eachDie in newGameController.fiveDiceContainer) {
+                        eachDie.currentValue = die1.randomizeValue;
+                    }
+                    newGameController.remainingRolls = 5;
+                    [newGameController printCurrentGameState];
+                }
             } else if ([choiceInput isEqualToString:@"reset"]) {
                 [newGameController resetDice];
                 newGameController.remainingRolls = 5;
                 [newGameController printCurrentGameState];
             } else if ([choiceInput isEqualToString:@"display"]) {
+                [newGameController printCurrentGameState];
+            } else if ([choiceInput isEqualToString:@"new game"]) {
+                newGameController.lowestScore = 30;
+                [newGameController resetDice];
+                for (Dice *eachDie in newGameController.fiveDiceContainer) {
+                    eachDie.currentValue = die1.randomizeValue;
+                }
+                newGameController.remainingRolls = 5;
+                [newGameController printCurrentGameState];
+            } else if ([choiceInput isEqualToString:@"roII"]) {
+                [newGameController forceToWin];
+                [newGameController printCurrentGameState];
+                NSLog(@" You Won!");
+                if (newGameController.returnCurrentScore < newGameController.lowestScore) {
+                    newGameController.lowestScore = newGameController.returnCurrentScore;
+                }
+                NSLog(@"");
+                NSLog(@" Start New Game");
+                [newGameController resetDice];
+                for (Dice *eachDie in newGameController.fiveDiceContainer) {
+                    eachDie.currentValue = die1.randomizeValue;
+                }
+                newGameController.remainingRolls = 5;
                 [newGameController printCurrentGameState];
             } else {
                 NSLog(@"Invalid input. Please try again.");

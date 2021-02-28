@@ -14,6 +14,7 @@
         _fiveDiceContainer = [NSMutableArray new];
         _heldDice = [NSMutableDictionary new];
         _remainingRolls = 5;
+        _lowestScore = 30;
     }
     return self;
 }
@@ -99,7 +100,15 @@
     NSLog(@"");
     NSLog(@"--   Total Score  --");
     NSLog(@"Score: %d", self.returnCurrentScore);
+    NSLog(@"Score to beat: %d", self.lowestScore);
     NSLog(@"--------------------");
+}
+
+- (void) forceToWin {
+    for (Dice *eachDie in self.fiveDiceContainer) {
+        eachDie.currentValue = 3;
+        eachDie.isHeld = true;
+    }
 }
 
 @end
