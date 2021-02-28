@@ -48,7 +48,7 @@ int main(int argc, const char * argv[]) {
             } else if ([choiceInput isEqualToString:@"hold"]) {
                 BOOL underChoosingDieToHold = YES;
                 while (underChoosingDieToHold) {
-                    NSString *numberToHold = [newInputHandler getUserInput:[NSString stringWithFormat:@"\nInput the number of a die to hold\n'finish' to complete choosing\n 1   2   3   4   5 \n%@ %@ %@ %@ %@", die1.returnDieFace, die2.returnDieFace, die3.returnDieFace, die4.returnDieFace, die5.returnDieFace]];
+                    NSString *numberToHold = [newInputHandler getUserInput:[NSString stringWithFormat:@"\nInput the number of a die to hold (reselect to unhold)\n'finish' to complete choosing\n 1   2   3   4   5 \n%@ %@ %@ %@ %@", die1.returnDieFace, die2.returnDieFace, die3.returnDieFace, die4.returnDieFace, die5.returnDieFace]];
                     
                     
                     if ([numberToHold isEqualToString:@"finish"]) {

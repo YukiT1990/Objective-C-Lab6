@@ -20,7 +20,7 @@
 - (void) holdDie: (NSString *) targetDieNumberStr {
     int targetDieNumber = (int)[targetDieNumberStr integerValue];
     Dice *targetDie = self.fiveDiceContainer[targetDieNumber - 1];
-    targetDie.isHeld = true;
+    targetDie.isHeld = !targetDie.isHeld;
     switch (targetDieNumber) {
         case 1:
             self.heldDice[@1] = self.fiveDiceContainer[0];
